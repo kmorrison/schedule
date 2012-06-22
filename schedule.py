@@ -29,6 +29,7 @@ def calculate_free_times(busy_times, start_time, end_time):
     busy_times = sorted(busy_times)
     tmp_first = None
     condensed_busy_times = []
+    # Collapse adjecent time-blocks together into a single block
     for chunk1, chunk2 in pairwise(busy_times):
         if chunk1[1] >= chunk2[0]:
             if tmp_first is None:
@@ -42,6 +43,7 @@ def calculate_free_times(busy_times, start_time, end_time):
     if tmp_first is not None:
         condensed_busy_times.append((tmp_first, chunk2[1]))
 
+    # Turn busy times into free times
     free_times = []
     for chunk1, chunk2 in pairwise(condensed_busy_times):
         if chunk1[0] == start_time or chunk2[1] == end_time:
